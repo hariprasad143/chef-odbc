@@ -57,6 +57,7 @@ Just include `odbc::drivers` in your node's `run_list` and pass an array of acce
     "recipe[odbc::drivers]"
   ]
 }
+```
 
 Contributing
 ------------
