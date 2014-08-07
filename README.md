@@ -23,6 +23,12 @@ Attributes
     <td>List of optional drivers to install. Includes :microsoft, :freetds, :postgresql, :mysql</td>
     <td><tt>[]]</tt></td>
   </tr>
+  <tr>
+    <td><tt>['odbc']['devel']</tt></td>
+    <td>Boolean</td>
+    <td>Install the devel package when installing from </td>
+    <td><tt>[]]</tt></td>
+  </tr>
 </table>
 
 Usage
@@ -54,9 +60,6 @@ Just include `odbc::drivers` in your node's `run_list` and pass an array of acce
 
 Contributing
 ------------
-TODO: (optional) If this is a public cookbook, detail the process for contributing. If this is a private cookbook, remove this section.
-
-e.g.
 1. Fork the repository on Github
 2. Create a named feature branch (like `add_component_x`)
 3. Write your change
