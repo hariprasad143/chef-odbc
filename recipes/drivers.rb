@@ -36,4 +36,30 @@ when 'rhel','fedora'
       notifies :run, 'bash[install-mssql-driver]', :immediately
     end
   end
+
+  if node['odbc']['drivers'].include? "freetds"
+
+    version = node['odbc']['driver']['freetds']['version']
+    file_name = "freetds-#{version}"
+    file_ext = ".tar.gz"
+
+    url = "#{node['odbc']['driver']['freetds']['source_url']}#{file_name}#{file_ext}"
+
+    bash 'install-freetds-driver' do
+      cwd Chef::Config[:file_cache_path]
+      code <<-EOH
+        tar -zxvf #{file_name}#{file_ext}
+        (cd #{file_name} && ./configure && make && make install)
+        EOH
+      #not_if { ::File.exists?("/usr/lib#{kernel_bit}/libmsodbcsql-11.0.so.2270.0") }
+      action :nothing
+    end
+
+    remote_file File.join(Chef::Config[:file_cache_path], file_name+file_ext) do
+      source url
+      owner 'root'
+      mode 0644
+      notifies :run, 'bash[install-freetds-driver]', :immediately
+    end
+  end
 end

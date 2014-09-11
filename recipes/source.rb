@@ -8,7 +8,7 @@ end
 source_url = node['odbc']['source']['url']
 file_name = "unixODBC-#{node['odbc']['source']['version']}"
 extn = '.tar.gz'
-url = "#{source_url}/#{file_name+extn}"
+url = "#{source_url}#{file_name+extn}"
 
 Chef::Log.info('Installing unixODBC From Source')
 
@@ -35,6 +35,7 @@ remote_file File.join(Chef::Config[:file_cache_path], file_name+extn) do
   source url
   owner 'root'
   mode 0644
-  ftp_active_mode true
+  checksum node['odbc']['source']['checksum']
+  use_conditional_get true
   notifies :run, 'bash[install-unixodbc]', :immediately
 end
